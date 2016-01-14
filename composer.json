@@ -17,5 +17,5 @@
 	{
 		"mnsami/composer-custom-directory-installer": "1.0.*" ,
 		"fluidphp/fluidphp": "*"
-	}
+	} 
 }
