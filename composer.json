@@ -15,7 +15,11 @@
 	] ,
 	"require": 
 	{
+<<<<<<< HEAD
 		"mnsami/composer-custom-directory-installer": "1.0.*" ,
+=======
+		"mnsami/composer-custom-directory-installer": "1.0.*"
+>>>>>>> fluidphploggerhelper/master
 		"fluidphp/fluidphp": "*"
 	}
 }
