@@ -1,0 +1,21 @@
+ {
+	"name": "fluidphp/logger-helper" ,	
+	"type": "library" ,
+	"description": "FluidPHP framework database logger helper" ,
+	"keywords": [ "php framework" ] ,
+	"homepage": "http://phptoolcase.com" ,
+	"license": "GPL V2" ,
+	"authors": 
+	[
+		{
+			"name": "Carlo Pietrobattista" ,
+			"email": "carlo@salapc.com" ,
+			"role": "Developer"
+		}
+	] ,
+	"require": 
+	{
+		"mnsami/composer-custom-directory-installer": "1.0.*"
+		"fluidphp/fluidphp": "*" ,
+	}
+}
