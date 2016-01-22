@@ -15,15 +15,14 @@
 	] ,
 	"require": 
 	{
-<<<<<<< HEAD
 		"mnsami/composer-custom-directory-installer": "1.0.*" ,
-=======
-<<<<<<< HEAD
-		"mnsami/composer-custom-directory-installer": "1.0.*" ,
-=======
-		"mnsami/composer-custom-directory-installer": "1.0.*"
->>>>>>> fluidphploggerhelper/master
->>>>>>> fluidphploggerhelper/master
 		"fluidphp/fluidphp": "*"
-	} 
+	} ,
+	"autoload": 
+	{
+		"psr-4": 
+		{
+			"helpers\\Logger\\": "" 
+		}
+	}
 }
