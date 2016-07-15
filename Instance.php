@@ -5,11 +5,7 @@
 	namespace helpers\Logger;
 	
 	class Instance extends \Model
-	{
-		protected static $_connectionName = 'api';
-		
-		protected static $_table = 'log';
-		
+	{		
 		protected static $_sessionID = null;
 		
 		public static function boot( )
@@ -58,5 +54,17 @@
 			$this->user_agent = $_SERVER[ 'HTTP_USER_AGENT' ];
 			$this->referer = ( isset( $_SERVER[ 'HTTP_REFERER' ] ) ) ? $_SERVER[ 'HTTP_REFERER' ] : null;
 			$this->domain = \Router::getProtocol( ) . '://' . $_SERVER[ 'HTTP_HOST' ];
+		}
+		
+		protected static function _initialize( )
+		{
+			$options = \App::options ( 'logger.' . ( \App::option( 'test_env' ) ? 'develop' : 'prod' ) );
+			static::$_connectionName = $options[ 'connection' ];
+			static::$_table =  $options[ 'table' ];
+			$class = parent::_initialize( );
+			static::$_connectionName = 'default';
+			static::$_table =  null;
+			return $class;
+			
 		}
 	}
