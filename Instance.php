@@ -39,13 +39,31 @@
 			return $this;
 		}
 		
+		public function mail( $to , $from = null , $subject = 'Logger Mail {type}' , $replyTo = null )
+		{
+			$this->_mail =
+			[
+				'to' 		=>	$to ,
+				'from'	=>	$from ,
+				'subject'	=>	$subject ,
+				'replyTo'	=>	$replyTo ,
+			];
+			return $this;
+		}
+		
 		public function save( )
 		{
 			$this->_addClientData( );
 			$this->session_id = static::$_sessionID;
 			$this->request_data = json_encode( $_REQUEST );
 			parent::save( );
+			if ( !empty( $this->_mail ) )
+			{
+				$this->_sendMail( );
+			}
 		}
+		
+		protected $_mail = [ ];
 		
 		protected function _addClientData( )
 		{
@@ -66,5 +84,41 @@
 			static::$_table =  null;
 			return $class;
 			
+		}
+		
+		protected function _sendMail( )
+		{
+			$headers = "MIME-Version: 1.0" . "\r\n";
+			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+			if ( $this->_mail[ 'from' ] )
+			{
+				$headers .= 'From: ' . $this->_mail[ 'from' ] . "\r\n";
+				$headers .= 'Reply-To: ' . ( ( $this->_mail[ 'replyTo' ] ) ?  
+							$this->_mail[ 'replyTo' ] : $this->_mail[ 'from' ] ) . "\r\n";
+			}
+			$headers .= "X-Mailer: PHP/" . phpversion( );
+			$subject = str_replace( '{type}' , ucfirst( $this->logtype ) , $this->_mail[ 'subject' ] );
+			$message = $this->message . "<br>";
+			if ( $this->method )
+			{
+				$message .= $this->method;
+				if ( $this->line )
+				{
+					$message .= ':' . $this->line;
+				}
+				$message .= "<br>";
+			}
+			if ( $this->data )
+			{
+				$message .= '<pre>' . print_r( $this->toArray( ) , true ) . '</pre>';
+			}
+			if ( !mail( $this->_mail[ 'to' ] , $subject , $message , $headers ) )
+			{
+				Logger::error( 'logger mail alert error' )
+					->data( error_get_last( ) )
+					->script( __METHOD__ , __LINE__ )
+					->save( );
+			}
+			return $this;
 		}
 	}
