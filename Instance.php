@@ -73,14 +73,56 @@
 			$this->domain = \Router::getProtocol( ) . '://' . $_SERVER[ 'HTTP_HOST' ];
 		}
 		
+		protected static function _getQB( )
+		{
+			$options = \App::options( 'logger.' . ( \App::option( 'test_env' ) ? 'develop' : 'prod' ) );
+			$manager = static::_namespace( static::$_connectionManager , 'Db' );
+			return call_user_func( $manager . '::getQB' , $options[ 'connection' ] );	
+		}
+		
+		/*protected static function _initialize( )
+		{
+			$qb = static::_getQB( );
+			if ( !array_key_exists( $class = get_called_class( ) , static::$_storage ) )
+			{
+				$options = \App::options( 'logger.' . ( \App::option( 'test_env' ) ? 'develop' : 'prod' ) );
+				static::$_storage[ $class ][ 'table' ] = $options[ 'table' ];
+				$qb->run( 'SHOW TABLES LIKE ?' , [ static::$_storage[ $class ][ 'table' ] ] );
+				if ( !$qb->countRows( ) )
+				{ 
+					trigger_error( 'Table ' . static::$_storage[ $class ][ 'table' ] . 
+								' does not exist, quitting now!' , E_USER_ERROR );
+					return false;
+				}
+				static::$_storage[ $class ][ 'columns' ] = static::getColumns( );
+				if ( method_exists( $class , 'boot' ) ){ static::boot( ); }
+			}
+			return $class;
+		}*/
+		
+		public static function getColumns( )
+		{
+			$class= get_called_class( );
+			if ( array_key_exists( 'columns' , static::$_storage[ $class ] ) )
+			{ 
+				return static::$_storage[ $class ][ 'columns' ]; 
+			}
+			$qb = static::_getQB( );
+			$qb->setFetchMode( \PDO::FETCH_ASSOC );
+			$columns = $qb->run( 'SHOW COLUMNS FROM ' . 
+						$qb->addBackTicks( static::$_storage[ $class ][ 'table' ] ) );
+			$cols = [ ];
+			foreach ( $columns as $name ){ $cols[ $name[ 'Field' ] ] = $name[ 'Field' ]; }
+			return static::$_storage[ $class ][ 'columns' ] = $cols;
+		}
+		
 		protected static function _initialize( )
 		{
-			$options = \App::options ( 'logger.' . ( \App::option( 'test_env' ) ? 'develop' : 'prod' ) );
-			static::$_connectionName = $options[ 'connection' ];
-			static::$_table =  $options[ 'table' ];
+			$options = \App::options( 'logger.' . ( \App::option( 'test_env' ) ? 'develop' : 'prod' ) );
+			$class_name = get_called_class( );
+			static::$_storage[ $class_name ][ 'table' ] = $options[ 'table' ];
+			static::$_storage[ $class_name ][ 'columns' ] = static::getColumns( );
 			$class = parent::_initialize( );
-			//static::$_connectionName = 'default';
-			//static::$_table =  null;
 			return $class;
 		}
 		
