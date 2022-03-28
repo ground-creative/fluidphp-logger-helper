@@ -1,35 +1,34 @@
- ##########################################################
+ # FluidPhp Logger Helper
 
-FluidPhp 1 open source project database logger helper
+FluidPhp is a framework based on the PhpToolCase library, visit [phptoolcase.com](http://phptoolcase.com) for complete guides and examples.
 
-A powerfull framework based on the phptoolcase library.
+## Installation
 
-##########################################################
+Add the package to your composer.json file, to install the helper.
 
-FluidPhp is a framework based on the PhpToolCase library.
+With fluidphp framework:
+```
+"require": 
+{
+	"mnsami/composer-custom-directory-installer": "2.0.*" ,
+	"fluidphp/logger-helper": "*"
+} ,
+"extra": 
+{
+	"installer-paths": 
+	{
+		"./vendor/fluidphp/helpers/Logger": ["fluidphp/logger-helper"]
+	}
+}
+```
 
-Visit phptoolcase.com for complete guides and examples.
+## Project Info
 
-== PROJECT INFO ===================================
+### Project Home
 
-== Project Home: http://phptoolcase.com
+http://phptoolcase.com
 
-== Requirements: php version 5.3+
+### Requirements
 
-== INSTALLATION WITH COMPOSER ========================
-	
-	Add the following to your composer.json file:
-	
-	- WITH FLUIDPHP FRAMEWORK:
-
-		"require": 
-		{
-			"fluidphp/logger-helper": "~1.0"
-		} ,
-		"extra": 
-		{
-			"installer-paths": 
-			{
-				"./vendor/fluidphp/helpers/Logger": ["fluidphp/logger-helper"]
-			}
-		}
+php version 5.4+<br>
+mysql database engine
