@@ -5,7 +5,7 @@
 	"keywords": [ "php framework" ] ,
 	"homepage": "http://phptoolcase.com" ,
 	"license": "GPL V2" ,
-	"version": "v1.0.3-stable",
+  "version": "v1.0.4-stable",
 	"authors": 
 	[
 		{
