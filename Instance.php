@@ -1,7 +1,5 @@
 <?php
 
-	// SET CONNECTION NAME AND TABLE FROM CONFIG FILE
-
 	namespace helpers\Logger;
 	
 	class Instance extends \Model
