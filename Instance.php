@@ -53,6 +53,7 @@
 		
 		public function save( )
 		{
+			if ( 'debug' == $this->logtype && !\App::option( 'app.test_env' ) ){ return false; }
 			$this->_addClientData( );
 			$this->session_id = static::$_sessionID;
 			$this->request_data = json_encode( $_REQUEST );
@@ -80,10 +81,9 @@
 			static::$_connectionName = $options[ 'connection' ];
 			static::$_table =  $options[ 'table' ];
 			$class = parent::_initialize( );
-			static::$_connectionName = 'default';
-			static::$_table =  null;
+			//static::$_connectionName = 'default';
+			//static::$_table =  null;
 			return $class;
-			
 		}
 		
 		protected function _sendMail( )
