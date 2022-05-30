@@ -16,8 +16,7 @@
 	] ,
 	"require": 
 	{
-		"mnsami/composer-custom-directory-installer": "2.0.*" ,
-		"fluidphp/fluidphp": "*"
+		"mnsami/composer-custom-directory-installer": "2.0.*"
 	} ,
 	"autoload": 
 	{
